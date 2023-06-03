@@ -7,6 +7,7 @@ export const getWeather = async (city) => {
         params: {
             appid: 'dacd51f220861cb7f47bdf40141eb30b',
             units: 'metric',
+            lang: 'es',
             q: city
         }
     }
