@@ -7,3 +7,4 @@ export const getCountries = async () => {
     };
     return await request(optionsRequest)
 }
+// Probé esta API, pero la descarte

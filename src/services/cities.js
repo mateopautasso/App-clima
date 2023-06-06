@@ -12,3 +12,4 @@ export const getCities = async (countryCode) => {
     }
     return await request(optionsRequest)
 }
+// Probé esta API, pero la descarte
