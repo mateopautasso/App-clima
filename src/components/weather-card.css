@@ -1,7 +1,9 @@
 .weatherCard {
-    width: 400px;
-    height: 100vh;
-    padding: 32px 32px;
+    position: relative;
+    width: 30%;
+    height: 100%;
+    padding: 32px;
+    padding-top: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,6 +12,7 @@
 .weatherCard__buscador {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 24px;
@@ -20,12 +23,21 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    margin-top: 100px;
 }
 .weatherCard__img  {
-    height: 150px;
+    height: 100px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.weatherCard__img img {
+    height: 175%;
+  filter: brightness(1.1);
 }
 .weatherCard__temp h1{
-    font-size: 80px;
+    font-size: 90px;
     font-weight: 500;
 }
 .centigrados {
@@ -33,7 +45,7 @@
     filter: brightness(0.7);
 }
 .weatherCard__description h4 {
-    filter: brightness(0.7);
+    filter: brightness(0.8);
     font-size: 30px;
     font-weight: 400;
 }
@@ -47,9 +59,21 @@
     font-size: 14px;
     font-weight: 300;
 }
+.weatherCard__bottom p:nth-child(2){
+    font-weight: 400;
+    filter: brightness(0.8);
+}
+.weather-undefined-h1 {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
     .weatherCard {
         width: 100%;
+    }
+    .weatherCard__description h4 {
+        margin: 16px;
     }
 }

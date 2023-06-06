@@ -1,11 +1,5 @@
 import './btns-buscador.css'
-export function SearchLocation({handlerBtn, children}) {
-    return(
-        <select onChange={handlerBtn} className='btn-SearchLocation'>
-            {children}
-        </select>
-    )
-}
+
 export function SearchYourLocation() {
     return(
         <figure className='btn-SearchYourLocation'>

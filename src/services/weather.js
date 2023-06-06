@@ -1,14 +1,12 @@
 import { request } from "../tools/request";
 
-export const getWeather = async (city) => {
+export const getWeather = async (lat, lng) => {
     const optionsRequest = {
         method: 'GET',
-        url: 'https://api.openweathermap.org/data/2.5/weather',
+        url: 'http://api.weatherapi.com/v1/forecast.json?key=219bd80bc25a4d1f958180547230306&days=5&aqi=no&alerts=no',
         params: {
-            appid: 'dacd51f220861cb7f47bdf40141eb30b',
-            units: 'metric',
             lang: 'es',
-            q: city
+            q: `${lat},${lng}`
         }
     }
     return await request(optionsRequest)

@@ -1,9 +1,7 @@
 //Deps
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 //Services
-import { getCountries } from "../services/countries";
-import { getCities } from '../services/cities';
 import { getWeather } from '../services/weather';
 
 export const WeatherContext = createContext();
@@ -12,62 +10,73 @@ export function ComponentContext({ children }) {
 
 	const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 	const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-    const [countries, setCountries] = useState([]);
-	const [cities, setCities] = useState([]);
-	const [weather, setWeather] = useState(undefined)
-	const [day, setDay] = useState(null)
+	const [weather, setWeather] = useState(undefined);
+	const [day, setDay] = useState(null);
+	const [latlng, setLatlng] = useState(null)
 
-	useEffect(() => {
-		
-		(async ()=>{
-			const resCountries = await getCountries();
-			resCountries.sort((a, b) => {
-				const nameA = a.name.common.toUpperCase();
-				const nameB = b.name.common.toUpperCase();
-			
-				if (nameA < nameB) {
-				  return -1;
-				}
-				if (nameA > nameB) {
-				  return 1;
-				}
-				return 0;
-			  });
-			setCountries(resCountries);
-			
-			const date = new Date();
-			setDay({
-					day: daysOfWeek[date.getDay()],
-					numberDay: date.getDay() + 1,
-					month: months[date.getMonth()]
-			})
-		})();
-		
-	}, []);
-
-	const countryHandler = async (e) => {
-		const resCities = await getCities(e.currentTarget.value)
-		setCities(resCities.geonames)
+	const latlngHandler = async (value) => {
+		setLatlng(value);
 	}
 
-	const cityHandler = async (e) => {
-		const resWeather = await getWeather(e.currentTarget.value)
-		console.log(resWeather)
+	const cityHandler = async () => {
+		const resWeather = await getWeather(latlng.lat, latlng.lng)
+		console.log(resWeather);
 		if(resWeather !== 404) {
 			setWeather({
-				temp: resWeather.main.temp,
-				description: resWeather.weather[0].description,
-				icon: resWeather.weather[0].icon,
-				nameCity: resWeather.name
+				temp: resWeather.current.temp_c,
+				description: resWeather.current.condition.text,
+				icon: resWeather.current.condition.icon,
+				nameCity: resWeather.location.name,
+				nextDays: resWeather.forecast.forecastday,
+				wind_kph: resWeather.current.wind_kph,
+				humidity: resWeather.current.humidity,
+				visibility: resWeather.current.vis_km,
+				presionAtm: resWeather.current.pressure_mb
+			})
+
+			const currentDay = new Date(`${resWeather.forecast.forecastday[0].date} GMT-0300`);
+			const nextDay = new Date(`${resWeather.forecast.forecastday[1].date} GMT-0300`);
+			const nextDay2 = new Date(`${resWeather.forecast.forecastday[2].date} GMT-0300`);
+			const nextDay3 = new Date(`${resWeather.forecast.forecastday[3].date} GMT-0300`);
+			const nextDay4 = new Date(`${resWeather.forecast.forecastday[4].date} GMT-0300`);
+
+			setDay({
+					day: daysOfWeek[currentDay.getDay()],
+					numberDay: currentDay.getDate(),
+					month: months[currentDay.getMonth()],
+					nextDays: [
+						{
+							day: daysOfWeek[nextDay.getDay()],
+							numberDay: nextDay.getDate(),
+							month: months[nextDay.getMonth()],
+							icon: resWeather.forecast.forecastday[1].day.condition.icon
+						},
+						{
+							day: daysOfWeek[nextDay2.getDay()],
+							numberDay: nextDay2.getDate(),
+							month: months[nextDay2.getMonth()],
+							icon: resWeather.forecast.forecastday[2].day.condition.icon
+						},						{
+							day: daysOfWeek[nextDay3.getDay()],
+							numberDay: nextDay3.getDate(),
+							month: months[nextDay3.getMonth()],
+							icon: resWeather.forecast.forecastday[3].day.condition.icon
+						},
+						{
+							day: daysOfWeek[nextDay4.getDay()],
+							numberDay: nextDay4.getDate(),
+							month: months[nextDay4.getMonth()],
+							icon: resWeather.forecast.forecastday[4].day.condition.icon
+						}
+					]
 			})
 		} else {
 			setWeather(null)
 		}
-
 	}
 
     return(
-        <WeatherContext.Provider value={{countries, cities, weather, day, countryHandler, cityHandler}}>
+        <WeatherContext.Provider value={{ weather, day, latlng, cityHandler, latlngHandler}}>
 			{children}
         </WeatherContext.Provider>
     )

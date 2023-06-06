@@ -1,0 +1,15 @@
+.card-highlights {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #1d213a;
+}
+.card-highlights p:nth-child(2) {
+    font-size: 50px;
+    font-weight: bold;
+}
+.card-highlights span {
+    font-size: 32px;
+    font-weight: 300;
+}
