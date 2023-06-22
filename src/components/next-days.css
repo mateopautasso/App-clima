@@ -21,17 +21,14 @@
     justify-items: stretch;
     gap: 28px;
 }
-
+.next-days-title {
+    text-align: center;
+    margin-top: 12px;
+}
 .todays-highlights-title {
     text-align: start;
     margin-top: 28px;
     margin-bottom: 12px;
-
-}
-.next-days-title {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 12px;
 }
 @media screen and (min-width: 769px) and (max-width: 1024px){
     .right-section-container {

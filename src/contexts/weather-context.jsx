@@ -10,7 +10,7 @@ export function ComponentContext({ children }) {
 
 	const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 	const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-	const [weather, setWeather] = useState(undefined);
+	const [weather, setWeather] = useState('');
 	const [day, setDay] = useState(null);
 	const [latlng, setLatlng] = useState(null)
 
@@ -21,7 +21,7 @@ export function ComponentContext({ children }) {
 	const cityHandler = async () => {
 		const resWeather = await getWeather(latlng.lat, latlng.lng)
 		console.log(resWeather);
-		if(resWeather !== 404) {
+		if(resWeather !== "AxiosError") {
 			setWeather({
 				temp: resWeather.current.temp_c,
 				description: resWeather.current.condition.text,
@@ -33,12 +33,14 @@ export function ComponentContext({ children }) {
 				visibility: resWeather.current.vis_km,
 				presionAtm: resWeather.current.pressure_mb
 			})
-
 			const currentDay = new Date(`${resWeather.forecast.forecastday[0].date} GMT-0300`);
-			const nextDay = new Date(`${resWeather.forecast.forecastday[1].date} GMT-0300`);
-			const nextDay2 = new Date(`${resWeather.forecast.forecastday[2].date} GMT-0300`);
-			const nextDay3 = new Date(`${resWeather.forecast.forecastday[3].date} GMT-0300`);
-			const nextDay4 = new Date(`${resWeather.forecast.forecastday[4].date} GMT-0300`);
+			let nextDay, nextDay2
+			if(resWeather.forecast.forecastday[1] !== undefined) {
+				nextDay = new Date(`${resWeather.forecast.forecastday[1].date} GMT-0300`);
+			}
+			if(resWeather.forecast.forecastday[2] !== undefined) {
+				nextDay2 = new Date(`${resWeather.forecast.forecastday[2].date} GMT-0300`);
+			}
 
 			setDay({
 					day: daysOfWeek[currentDay.getDay()],
@@ -56,22 +58,11 @@ export function ComponentContext({ children }) {
 							numberDay: nextDay2.getDate(),
 							month: months[nextDay2.getMonth()],
 							icon: resWeather.forecast.forecastday[2].day.condition.icon
-						},						{
-							day: daysOfWeek[nextDay3.getDay()],
-							numberDay: nextDay3.getDate(),
-							month: months[nextDay3.getMonth()],
-							icon: resWeather.forecast.forecastday[3].day.condition.icon
-						},
-						{
-							day: daysOfWeek[nextDay4.getDay()],
-							numberDay: nextDay4.getDate(),
-							month: months[nextDay4.getMonth()],
-							icon: resWeather.forecast.forecastday[4].day.condition.icon
 						}
 					]
 			})
 		} else {
-			setWeather(null)
+			alert('Error en api')
 		}
 	}
 

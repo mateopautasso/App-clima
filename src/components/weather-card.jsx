@@ -6,8 +6,8 @@ import { WeatherContext } from '../contexts/weather-context';
 import LocationSearchInput from './buscador';
 
 export function WeatherCard() {
-
     const { weather, day } = useContext(WeatherContext)
+    console.log(weather)
     
     return(
         <div className="weatherCard">
@@ -36,7 +36,7 @@ export function WeatherCard() {
                 </div>
             }
             {
-                weather === undefined && 
+                weather === '' && 
                     <h1 className='weather-undefined-h1'> Ingrese una ciudad </h1>
             }
                        {
