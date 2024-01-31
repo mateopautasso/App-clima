@@ -1,85 +1,71 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { WeatherContext } from '../contexts/weather-context';
-import './buscador.css'
+import './buscador.css';
 
-class LocationSearchInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { address: '' };
-  }
+const LocationSearchInput = () => {
+	const [address, setAddress] = useState('');
+	const weatherContext = useContext(WeatherContext);
 
-  handleChange = (address) => {
-    this.setState({ address });
-  };
+	const handleChange = (newAddress) => {
+		setAddress(newAddress);
+	};
 
-  handleSelect = (address) => {
-    geocodeByAddress(address)
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
-        const { latlngHandler } = this.context;
-        latlngHandler(latLng);
-      })
-      .catch((error) => console.error('Error', error));
-  };
+	const handleSelect = (newAddress) => {
+		geocodeByAddress(newAddress)
+			.then((results) => getLatLng(results[0]))
+			.then((latLng) => {
+				const { latlngHandler } = weatherContext;
+				latlngHandler(latLng);
+			})
+			.catch((error) => console.error('Error', error));
+	};
 
-  handleSubmit = ()=>{
-    const { cityHandler } = this.context;
-    cityHandler();
-  }
+	const handleSubmit = () => {
+		const { cityHandler } = weatherContext;
+		cityHandler();
+	};
 
-  render() {
-    return (
-      <WeatherContext.Consumer>
-        {(context) => (
-          <PlacesAutocomplete
-            value={this.state.address}
-            onChange={this.handleChange}
-            onSelect={this.handleSelect}
-          >
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-              <div style={{width: '100%',position: 'absolute', zIndex: '9999'}}>
-                <input
-                  value={this.address}
-                  {...getInputProps({
-                    placeholder: 'Ingrese su ubicación...',
-                    className: 'location-search-input',
-                  })}
-                />
-                <div className="autocomplete-dropdown-container">
-                  {loading && <div>Loading...</div>}
-                  {suggestions.map((suggestion) => {
-                    const className = suggestion.active
-                      ? 'suggestion-item suggestion-item--active'
-                      : 'suggestion-item';
-                    
-                    return (
-                      <div
-                      key={suggestion.description}
-                        {...getSuggestionItemProps(suggestion, {
-                          className
-                        })}
-                      >
-                        <span
-                          onClick={()=>this.handleChange(suggestion.description)}
-                        >{suggestion.description}</span>
-                      </div>
-                    );
-                  })}
-                    <button className='location-search-btn' onClick={this.handleSubmit}>
-                        Realizar búsqueda
-                    </button>
-                </div>
-              </div>
-            )}
-          </PlacesAutocomplete>
-        )}
-      </WeatherContext.Consumer>
-    );
-  }
-}
+	return (
+		<WeatherContext.Consumer>
+			{(context) => (
+				<PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
+					{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+						<div style={{ width: '100%' }}>
+							<input
+								value={address}
+								{...getInputProps({
+									placeholder: 'Ingrese su ubicación...',
+									className: 'location-search-input',
+								})}
+							/>
+							<div className='autocomplete-dropdown-container'>
+								{loading && <div style={{ paddingBlock: '8px' }}>Loading...</div>}
+								{suggestions.map((suggestion) => {
+									const className = suggestion.active ? 'suggestion-item suggestion-item--active' : 'suggestion-item';
 
-LocationSearchInput.contextType = WeatherContext;
+									return (
+										<div
+											key={suggestion.description}
+											{...getSuggestionItemProps(suggestion, {
+												className,
+											})}
+										>
+											<span onClick={() => handleChange(suggestion.description)}>{suggestion.description}</span>
+										</div>
+									);
+								})}
+								<button className='location-search-btn' onClick={handleSubmit}>
+									Realizar búsqueda
+								</button>
+							</div>
+						</div>
+					)}
+				</PlacesAutocomplete>
+			)}
+		</WeatherContext.Consumer>
+	);
+};
 
 export default LocationSearchInput;

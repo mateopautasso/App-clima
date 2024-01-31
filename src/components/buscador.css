@@ -1,45 +1,45 @@
-.location-search-input{
-    width: 90%;
-    padding: 8px;
-    background-color: #6e707a;
-    color: white;
-    font-size: 16px;
-    margin-bottom: 8px;
-    outline-style: none;
-    border-style: none;
-    border-radius: 4px;
+.location-search-input {
+	width: 100%;
+	background-color: #6e707a;
+	color: white;
+	font-size: 16px;
+	padding: 8px;
+	margin-bottom: 8px;
+	outline-style: none;
+	border-style: none;
+	border-radius: 4px;
 }
 .location-search-input:focus {
-    border: 1px solid white;
+	outline: 1px solid white;
 }
 .location-search-input::placeholder {
-    color: white;
+	color: white;
 }
 .suggestion-item {
-    cursor: pointer;
-    background-color: #1d213a;
-    border-radius: 4px;
-    margin: 4px;
-    padding: 4px 0px;
-    width: 90%;
-    margin: 0 auto;
+	cursor: pointer;
+	background-color: #1d213a;
+	border-radius: 4px;
+	margin: 4px;
+	padding: 4px 0px;
+	width: 90%;
+	margin: 0 auto;
 }
 .suggestion-item--active {
-    background-color: #6e707a;
-    border-bottom: 1px solid white;
+	background-color: #6e707a;
+	border-bottom: 1px solid white;
 }
 .location-search-btn {
-    width: 90%;
-    margin-top: 0px;
-    padding: 8px;
-    border-radius: 4px;
-    color: #1d213a;
-    background-color: white;
-    border-style: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+	width: 100%;
+	margin-top: 0px;
+	padding: 8px;
+	border-radius: 4px;
+	color: #1d213a;
+	background-color: white;
+	border-style: none;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
 }
 .location-search-btn:active {
-    opacity: 0.8;
+	opacity: 0.8;
 }
