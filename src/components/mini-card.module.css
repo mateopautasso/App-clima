@@ -1,4 +1,4 @@
-.mini-card {
+.miniCard {
 	width: 50%;
 	height: 200px;
 	padding: 16px;
@@ -12,16 +12,18 @@
 	font-weight: 300;
 	box-shadow: 0px 10px 20px -5px black;
 }
-h5 {
+.title {
+	font-size: 1.6rem;
 	font-weight: 400;
 }
 .temp {
+	font-size: 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	gap: 32px;
 }
 @media screen and (max-width: 425px) {
-	.mini-card {
+	.miniCard {
 		width: 100%;
 	}
 }

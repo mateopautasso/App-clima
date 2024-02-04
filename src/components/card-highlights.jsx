@@ -1,11 +1,12 @@
-import './card-highlights.css';
+import styles from './card-highlights.module.css';
 export function CardHighlights({ prop, value, span }) {
 	return (
-		<div className='card-highlights animation-appear'>
+		<div className={`${styles.cardHighlights} animation-appear`}>
 			<p>{prop}</p>
-			<p>
-				{value} <span>{span}</span>
-			</p>
+			<div className={styles.containerInfo}>
+				<p>{value}</p>
+				<p>{span}</p>
+			</div>
 		</div>
 	);
 }

@@ -25,7 +25,7 @@ export function NextDays() {
 						tempMin={weather.nextDays[1].day.mintemp_c}
 					/>
 				</div>
-				<h2 className='todays-highlights-title'>Lo más destacado:</h2>
+				<h2 className='todays-highlights-title'>Lo más destacado</h2>
 				<div className='todays-highlights-container'>
 					<CardHighlights prop='Viento' value={weather.wind_kph} span='kph' />
 					<CardHighlights prop='Humedad' value={weather.humidity} span='%' />

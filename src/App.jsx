@@ -4,6 +4,7 @@ import './App.css';
 import { ComponentContext } from './contexts/weather-context';
 import { WeatherCard } from './components/weather-card';
 import { NextDays } from './components/next-days';
+import Footer from './components/footer';
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				<WeatherCard />
 				<NextDays />
 			</ComponentContext>
+			<Footer />
 		</div>
 	);
 }
