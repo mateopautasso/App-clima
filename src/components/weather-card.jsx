@@ -14,7 +14,7 @@ export function WeatherCard() {
 	return (
 		<div className='weatherCard'>
 			<div className='weatherCard__buscador'>
-				<LocationSearchInput></LocationSearchInput>
+				<LocationSearchInput />
 			</div>
 			{weather && (
 				<div className='weatherCard__info'>
